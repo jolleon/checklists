@@ -1,18 +1,20 @@
-var app = angular.module('app', [])
+var app = angular.module('app', ['firebase'])
 
-app.controller('ChecklistCtrl', function ($scope) {
-    $scope.items = [{text: 'an item', done: true}, {text:'another item', done: false}];
+app.controller('ChecklistCtrl', ['$scope', '$firebase',
+    function ($scope, $firebase) {
+        var ref = new Firebase('https://mychecklists.firebaseio.com/items')
+        $scope.ref = $firebase(ref);
+        $scope.ref.$bind($scope, "items");
+    //[{text: 'an item', done: true}, {text:'another item', done: false}];
 
-    $scope.addItem = function() {
-        $scope.items.push({text: $scope.newItemText, done: false});
-        $scope.newItemText = '';
-    }
+        $scope.addItem = function() {
+            $scope.items.$add({text: $scope.newItemText, done: false});
+            $scope.newItemText = '';
+        }
 
-    $scope.remove = function(item) {
-        var index = $scope.items.indexOf(item);
-        if (index > -1) {
-            $scope.items.splice(index, 1);
+        $scope.remove = function(item) {
+            $scope.items.$remove(item);
         }
     }
-})
+]);
 
