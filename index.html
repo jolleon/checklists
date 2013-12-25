@@ -21,7 +21,6 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
 
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.js"></script>
         <script src="/static/checklist.js"></script>
     </head>
     <body>
@@ -49,8 +48,8 @@
                     <section>
                         <h1>My Checklist</h1>
                         <table width=100% class="table table-striped table-hover">
-                            <tbody ui-sortable ng-model="items">
-                            <tr ng-repeat="item in items" class="item" style="cursor: move">
+                            <tbody>
+                            <tr ng-repeat="item in items" class="item">
                                     <td><input type="checkbox" ng-model="item.done"></td>
                                     <td class="input">
                                         <input type="text" ng-model="item.text" class="textinput done-{{item.done}}">

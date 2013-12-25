@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ui'])
+var app = angular.module('app', [])
 
 app.controller('ChecklistCtrl', function ($scope) {
     $scope.items = [{text: 'an item', done: true}, {text:'another item', done: false}];
