@@ -19,18 +19,22 @@ app.config(function($routeProvider) {
 }]);
 
 app.controller('ChecklistCtrl', function ($scope, $firebase, $routeParams) {
-    var ref;
-    if ($routeParams.listId){
-        $scope.ref = $firebase(
-            new Firebase('https://mychecklists.firebaseio.com/lists/' + $routeParams.listId)
-        );
-    } else {
-        $scope.ref = $firebase(
-            new Firebase('https://mychecklists.firebaseio.com/')
-        );
-    }
-    $scope.items = $scope.ref.$child("items"); //{text: 'an item', done: true}, {text:'another item', done: false}];
-    $scope.ref.$child("items").$bind($scope, "items");
+    var ref = new Firebase('https://mychecklists.firebaseio.com/lists/' + $routeParams.listId)
+    $scope.ref = $firebase(ref);
+    // if items dont exist yet binding them directly initializes them as a
+    // string in firebase, and then calling $add on that crashes... so if they don't exist
+    // a workaround is to initialize the local list like below and this somehow
+    // makes it work.
+    // Don't do that if items already exist though or if the list is open in
+    // another browser that makes it blink...
+    ref.child("items").once('value', function(snapshot) {
+        if (snapshot.val() === null){
+            $scope.items = $scope.ref.$child("items");
+        }
+        $scope.ref.$child("items").$bind($scope, "items");
+    });
+    $scope.name = "Loading checklist...";
+    $scope.ref.$child("name").$bind($scope, "name");
 
     $scope.addItem = function() {
         $scope.items.$add({text: $scope.newItemText, done: false});
