@@ -3,8 +3,8 @@ var app = angular.module('app', ['ngRoute', 'firebase']);
 app.config(function($routeProvider) {
     $routeProvider
         .when('/', {
-            controller: 'ChecklistCtrl',
-            templateUrl: '/static/checklist.html'
+            controller: 'CreateCtrl',
+            templateUrl: '/static/create.html'
         })
         .when('/list/:listId', {
             controller: 'ChecklistCtrl',
@@ -22,7 +22,7 @@ app.controller('ChecklistCtrl', function ($scope, $firebase, $routeParams) {
     var ref;
     if ($routeParams.listId){
         $scope.ref = $firebase(
-            new Firebase('https://mychecklists.firebaseio.com/' + $routeParams.listId)
+            new Firebase('https://mychecklists.firebaseio.com/lists/' + $routeParams.listId)
         );
     } else {
         $scope.ref = $firebase(
@@ -43,3 +43,12 @@ app.controller('ChecklistCtrl', function ($scope, $firebase, $routeParams) {
 }
 );
 
+app.controller('CreateCtrl', function ($scope, $firebase, $location) {
+    $scope.create = function() {
+        var id = "";
+        for (var i=0; i<8; i++) {
+            id += (Math.random() * 36 | 0).toString(36);
+        }
+        $location.path('/list/' + id);
+    };
+});
