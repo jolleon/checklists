@@ -18,20 +18,28 @@ app.config(function($routeProvider) {
         $locationProvider.html5Mode(true).hashPrefix('!');
 }]);
 
-app.controller('ChecklistCtrl', function ($scope, $firebase) {
-        var ref = new Firebase('https://mychecklists.firebaseio.com/items')
-        $scope.ref = $firebase(ref);
-        $scope.ref.$bind($scope, "items");
-    //[{text: 'an item', done: true}, {text:'another item', done: false}];
-
-        $scope.addItem = function() {
-            $scope.items.$add({text: $scope.newItemText, done: false});
-            $scope.newItemText = '';
-        }
-
-        $scope.remove = function(item) {
-            $scope.items.$remove(item);
-        }
+app.controller('ChecklistCtrl', function ($scope, $firebase, $routeParams) {
+    var ref;
+    if ($routeParams.listId){
+        $scope.ref = $firebase(
+            new Firebase('https://mychecklists.firebaseio.com/' + $routeParams.listId)
+        );
+    } else {
+        $scope.ref = $firebase(
+            new Firebase('https://mychecklists.firebaseio.com/')
+        );
     }
+    $scope.items = $scope.ref.$child("items"); //{text: 'an item', done: true}, {text:'another item', done: false}];
+    $scope.ref.$child("items").$bind($scope, "items");
+
+    $scope.addItem = function() {
+        $scope.items.$add({text: $scope.newItemText, done: false});
+        $scope.newItemText = '';
+    }
+
+    $scope.remove = function(item) {
+        $scope.items.$remove(item);
+    }
+}
 );
 
