@@ -10,7 +10,7 @@ def hello():
     return make_response(open('index.html').read())
 
 
-@app.route('/list/<int:list_id>')
+@app.route('/list/<list_id>')
 def list(list_id):
     # let angular handle routing and firebase
     return make_response(open('index.html').read())

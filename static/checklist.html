@@ -1,0 +1,27 @@
+                <article>
+                    <section>
+                        <h1>My Checklist</h1>
+                        <table width=100% class="table table-striped table-hover">
+                            <tbody>
+                            <tr ng-repeat="(index, item) in items" class="item">
+                                    <td><input type="checkbox" ng-model="item.done"></td>
+                                    <td class="input">
+                                        <input type="text" ng-model="item.text" class="textinput done-{{item.done}}">
+                                    </td>
+                                    <td><button type="button" class="close" aria-hidden="true" ng-click="remove(index)">&times;</button></td>
+                            </tr>
+                            <tr>
+                        <form ng-submit="addItem()" class="form-inline">
+                            <td></td>
+                            <td>
+                            <div class="form-group">
+                                <input type="text" class="form-control" ng-model="newItemText" placeholder="new item">
+                            </div>
+                            </td><td>
+                            <input type="submit" class="btn btn-info" value="add">
+                    </td></tr>
+                        </form>
+                            </tbody>
+                        </table>
+                    </section>
+                </article>

@@ -1,7 +1,24 @@
-var app = angular.module('app', ['firebase'])
+var app = angular.module('app', ['ngRoute', 'firebase']);
 
-app.controller('ChecklistCtrl', ['$scope', '$firebase',
-    function ($scope, $firebase) {
+app.config(function($routeProvider) {
+    $routeProvider
+        .when('/', {
+            controller: 'ChecklistCtrl',
+            templateUrl: '/static/checklist.html'
+        })
+        .when('/list/:listId', {
+            controller: 'ChecklistCtrl',
+            templateUrl: '/static/checklist.html'
+        })
+        .otherwise({
+            redirectTo: '/'
+        });
+})
+.config(['$locationProvider', function($locationProvider){
+        $locationProvider.html5Mode(true).hashPrefix('!');
+}]);
+
+app.controller('ChecklistCtrl', function ($scope, $firebase) {
         var ref = new Firebase('https://mychecklists.firebaseio.com/items')
         $scope.ref = $firebase(ref);
         $scope.ref.$bind($scope, "items");
@@ -16,5 +33,5 @@ app.controller('ChecklistCtrl', ['$scope', '$firebase',
             $scope.items.$remove(item);
         }
     }
-]);
+);
 
