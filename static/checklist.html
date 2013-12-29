@@ -8,10 +8,10 @@
         </h1>
         <table width=100% class="table table-hover">
             <tbody>
-            <tr ng-repeat="(index, item) in items" class="item">
+            <tr ng-repeat="(index, item) in items" class="item" ng-class="{warning: focused}">
                 <td><input type="checkbox" ng-model="item.done"></td>
                 <td class="input">
-                    <input type="text" ng-model="item.text" class="textinput done-{{item.done}}">
+                    <input type="text" ng-model="item.text" class="textinput done-{{item.done}}" ng-focus="focused = true" ng-blur="focused = false">
                 </td>
                 <td>
                     <button type="button" class="close" aria-hidden="true" ng-click="remove(index)">&times;</button>
