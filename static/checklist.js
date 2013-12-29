@@ -46,15 +46,12 @@ app.controller('ChecklistCtrl', function ($scope, $firebase, $routeParams) {
     }
 
     $scope.onItemFocus = function(index) {
-        $scope.ref.child("items").child(index).child("focused").transaction(function(current) {
-            return current + 1;
-        });
+        $scope.focusTracker = $scope.ref.child("items").child(index).child("focused").push(true);
+        $scope.focusTracker.onDisconnect().remove();
     }
 
     $scope.onItemBlur = function(index) {
-        $scope.ref.child("items").child(index).child("focused").transaction(function(current) {
-            return current - 1;
-        });
+        $scope.focusTracker.remove();
     }
 }
 );
