@@ -15,7 +15,8 @@
     </section>
     <section>
         <h1>Existing checklists</h1>
-        <ul>
+        <span ng-hide="lists.$getIndex().length">loading...</span>
+        <ul ng-show="lists.$getIndex().length">
             <li ng-repeat="(id, list) in lists">
                 <a href="/list/{{ id }}">{{ list.name }}</a>
             </li>
