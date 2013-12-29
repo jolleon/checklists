@@ -1,12 +1,17 @@
 <article>
     <section>
-        <h1>New Checklist</h1>
-        <form ng-submit="create()" class="form-inline">
-            <div class="form-group">
-                <input type="text" class="form-control" ng-model="newName" placeholder="name">
-            </div>
-            <input type="submit" class="btn btn-info" value="new">
-        </form>
+        <div ng-hide="creating">
+            <h1>New Checklist</h1>
+            <form ng-submit="create()" class="form-inline">
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="newName" placeholder="name">
+                </div>
+                <input type="submit" class="btn btn-info" value="new">
+            </form>
+        </div>
+        <div ng-show="creating">
+            <h1>Creating checklist...</h1>
+        </div>
     </section>
 </article>
 

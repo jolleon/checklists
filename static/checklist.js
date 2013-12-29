@@ -49,6 +49,7 @@ app.controller('ChecklistCtrl', function ($scope, $firebase, $routeParams) {
 
 app.controller('CreateCtrl', function ($scope, $firebase, $location) {
     $scope.create = function() {
+        $scope.creating = "true";
         var id = "";
         for (var i=0; i<8; i++) {
             id += (Math.random() * 36 | 0).toString(36);
