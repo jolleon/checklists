@@ -33,7 +33,7 @@ app.controller('ChecklistCtrl', function ($scope, $firebase, $routeParams) {
         }
         $scope.ref.$child("items").$bind($scope, "items");
     });
-    $scope.name = "Loading checklist...";
+    //$scope.name = "Loading checklist...";
     $scope.ref.$child("name").$bind($scope, "name");
 
     $scope.addItem = function() {
@@ -48,6 +48,9 @@ app.controller('ChecklistCtrl', function ($scope, $firebase, $routeParams) {
 );
 
 app.controller('CreateCtrl', function ($scope, $firebase, $location) {
+    var ref = new Firebase('https://mychecklists.firebaseio.com/lists');
+    $scope.lists = $firebase(ref);
+
     $scope.create = function() {
         $scope.creating = "true";
         var id = "";
