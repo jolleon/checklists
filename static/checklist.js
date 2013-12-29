@@ -53,6 +53,10 @@ app.controller('CreateCtrl', function ($scope, $firebase, $location) {
         for (var i=0; i<8; i++) {
             id += (Math.random() * 36 | 0).toString(36);
         }
-        $location.path('/list/' + id);
+        var ref = new Firebase('https://mychecklists.firebaseio.com/lists/' + id);
+        ref.child("name").set($scope.newName, function(error) {
+            $location.path('/list/' + id);
+            $scope.$apply();
+        });
     };
 });
