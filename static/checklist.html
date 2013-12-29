@@ -17,17 +17,10 @@
                     <button type="button" class="close" aria-hidden="true" ng-click="remove(index)">&times;</button>
                 </td>
             </tr>
-            <tr><form ng-submit="addItem()" class="form-inline">
-                <td></td>
-                <td>
-                <div class="form-group">
-                    <input type="text" class="form-control" ng-model="newItemText" placeholder="new item">
-                </div>
-                </td><td>
-                <input type="submit" class="btn btn-info" value="add">
-                </td>
-            </form></tr>
             </tbody>
         </table>
+        <form ng-submit="addItem()" class="form-inline">
+            <input type="text" class="form-control" ng-model="newItemText" placeholder="new item">
+        </form>
     </section>
 </article>
