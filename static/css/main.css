@@ -74,18 +74,30 @@ body {
    =================== */
 
 .header-container {
-    border-bottom: 20px solid #e44d26;
+    border-bottom: 20px solid #6ac;/*#e44d26;*/
 }
 
 .footer-container,
 .main aside {
-    border-top: 20px solid #e44d26;
+    border-top: 20px solid #6ac;/*#e44d26;*/
 }
 
 .header-container,
 .footer-container,
 .main aside {
-    background: #f16529;
+    /*background: #666666;/*#f16529;*/
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        right bottom,
+        color-stop(0, #333333),
+        color-stop(1, #757575)
+    );
+    background-image: -o-linear-gradient(right bottom, #333333 0%, #757575 100%);
+    background-image: -moz-linear-gradient(right bottom, #333333 0%, #757575 100%);
+    background-image: -webkit-linear-gradient(right bottom, #333333 0%, #757575 100%);
+    background-image: -ms-linear-gradient(right bottom, #333333 0%, #757575 100%);
+    background-image: linear-gradient(to right bottom, #333333 0%, #757575 100%);
 }
 
 .title {
