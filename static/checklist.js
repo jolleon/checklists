@@ -19,30 +19,42 @@ app.config(function($routeProvider) {
 }]);
 
 app.controller('ChecklistCtrl', function ($scope, $firebase, $routeParams) {
-    var ref = new Firebase('https://mychecklists.firebaseio.com/lists/' + $routeParams.listId)
-    $scope.ref = $firebase(ref);
+    $scope.ref = new Firebase('https://mychecklists.firebaseio.com/lists/' + $routeParams.listId)
+    $scope.remote = $firebase($scope.ref);
     // if items dont exist yet binding them directly initializes them as a
     // string in firebase, and then calling $add on that crashes... so if they don't exist
     // a workaround is to initialize the local list like below and this somehow
     // makes it work.
     // Don't do that if items already exist though or if the list is open in
     // another browser that makes it blink...
-    ref.child("items").once('value', function(snapshot) {
+    $scope.ref.child("items").once('value', function(snapshot) {
         if (snapshot.val() === null){
-            $scope.items = $scope.ref.$child("items");
+            $scope.items = $scope.remote.$child("items");
         }
-        $scope.ref.$child("items").$bind($scope, "items");
+        $scope.remote.$child("items").$bind($scope, "items");
     });
     //$scope.name = "Loading checklist...";
-    $scope.ref.$child("name").$bind($scope, "name");
+    $scope.remote.$child("name").$bind($scope, "name");
 
     $scope.addItem = function() {
-        $scope.items.$add({text: $scope.newItemText, done: false});
+        $scope.items.$add({text: $scope.newItemText, done: false, focused: 0});
         $scope.newItemText = '';
     }
 
-    $scope.remove = function(item) {
-        $scope.items.$remove(item);
+    $scope.remove = function(index) {
+        $scope.items.$remove(index);
+    }
+
+    $scope.onItemFocus = function(index) {
+        $scope.ref.child("items").child(index).child("focused").transaction(function(current) {
+            return current + 1;
+        });
+    }
+
+    $scope.onItemBlur = function(index) {
+        $scope.ref.child("items").child(index).child("focused").transaction(function(current) {
+            return current - 1;
+        });
     }
 }
 );
