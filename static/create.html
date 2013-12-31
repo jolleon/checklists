@@ -4,7 +4,7 @@
             <h1>New Checklist</h1>
             <form ng-submit="create()" class="form-inline">
                 <div class="form-group">
-                    <input type="text" class="form-control" ng-model="newName" placeholder="name">
+                    <input type="text" class="form-control" ng-model="newName" placeholder="Name">
                 </div>
                 <input type="submit" class="btn btn-info" value="Create">
             </form>
@@ -16,11 +16,14 @@
     <section>
         <h1>Existing checklists</h1>
         <span ng-hide="lists.$getIndex().length">loading...</span>
-        <ul ng-show="lists.$getIndex().length">
-            <li ng-repeat="(id, list) in lists">
-                <a href="/list/{{ id }}">{{ list.name }}</a>
-            </li>
-        </ul>
+        <div ng-show="lists.$getIndex().length">
+            <input type="text" ng-model="search" class="form-control" placeholder="Search">
+            <ul>
+                <li ng-repeat="(id, list) in lists | orderByPriority | filter:search">
+                    <a href="/list/{{ id }}">{{ list.name }}</a>
+                </li>
+            </ul>
+        </div>
     </section>
 
 </article>
