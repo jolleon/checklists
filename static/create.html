@@ -19,8 +19,8 @@
         <div ng-show="lists.$getIndex().length">
             <input type="text" ng-model="search" class="form-control" placeholder="Search">
             <ul>
-                <li ng-repeat="(id, list) in lists | orderByPriority | filter:search">
-                    <a href="/list/{{ id }}">{{ list.name }}</a>
+                <li ng-repeat="list in lists | orderByPriority | filter:search">
+                    <a href="/list/{{ list.$id }}">{{ list.name }}</a>
                 </li>
             </ul>
         </div>
